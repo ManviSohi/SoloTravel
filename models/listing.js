@@ -9,13 +9,8 @@ const listingSchema = new Schema({
     },   
     description: String,
     image:  {
-        type: String,
-        default:
-            "https://unsplash.com/photos/brown-nipa-hut-on-white-sand-beach-during-daytime-4aqH2utAPAs",
-        set: (v) =>
-            v ==="" 
-                ? "https://unsplash.com/photos/brown-nipa-hut-on-white-sand-beach-during-daytime-4aqH2utAPAs"
-                : v,
+        url: String,
+        filename: String, 
     },
     price: Number,
     location: String,
