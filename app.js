@@ -11,6 +11,7 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const cors = require("cors");  //connet http request from hoppscotch
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -21,7 +22,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-const MONGO_URI = "mongodb://127.0.0.1:27017/wanderlust";
+const dbURL = process.env.ATLASDB_URL;
 
 main()
     .then(() => {
@@ -31,7 +32,7 @@ main()
     });
 
 async function main() {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(dbURL);    //MONGO_URI
 }
 
 app.set("view engine", "ejs");  
@@ -42,22 +43,33 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public"))); 
 app.use(cors());  //to avoid cors error while connecting from hoppscotch
 
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    crypto: {
+       secret: process.env.SECRET,
+    }, 
+    touchAfter: 24 * 3600,
+})
 
+store.on("error", () => {
+    console.log("ERROR in MONGO SESSION STORE", err);
+});
 
 const sessionOptions = {
-    secret: "mysupersecrecode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {
+    cookie: { 
         expires: Date.now() + 7 * 24 * 60 *1000,
         maxAge:  7 * 24 * 60 * 1000,
         httpOnly: true,
     }
 };
 
-app.get("/", (req, res) => {
-    res.send("Hi, I am root");
-}); 
+// app.get("/", (req, res) => {
+//     res.send("Hi, I am root");
+// }); 
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -80,7 +92,7 @@ app.use((req, res, next) => {
 //     let fakeUser = new User({
 //         email: "student@gmail.com",
 //         username: "delta-student",
-//     });
+//     }); 
 
 //     let registeredUser = await User.register(fakeUser, "helloworld");
 //     res.send(registeredUser);
