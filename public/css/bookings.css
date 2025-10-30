@@ -1,0 +1,83 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.bookings-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.booking-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.booking-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.booking-card img {
+    height: 200px;
+    object-fit: cover;
+    padding: 8px;
+}
+
+.booking-card .card-body {
+    padding: 8px;
+    margin: 10px;
+}
+
+.booking-card .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.booking-card .text-muted {
+    font-size: 0.9rem;
+}
+
+/* 🌟 Unified Button Style (Update-style) */
+.btn-custom {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 6px 18px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    width: auto;
+    min-width: 80px;
+    text-align: center;
+}
+
+.btn-custom:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+.alert-info {
+    border-radius: 12px;
+    font-size: 1rem;
+}
+
+h2 {
+    font-weight: 700;
+    color: #333;
+}
+
+.btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+}

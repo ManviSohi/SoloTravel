@@ -1,0 +1,303 @@
+/* 🌄 Global Styles */
+body {
+  background-color: #f8f9fa;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🖼️ Listing Image Section */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.image-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.listing-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(95%);
+  transition: filter 0.4s ease;
+}
+
+.image-container:hover .listing-image {
+  filter: brightness(75%);
+}
+
+/* Overlay Text */
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  transition: all 0.3s ease;
+}
+
+.image-overlay h5 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.image-overlay p {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* 💳 Listing Card */
+.show-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.show-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 🧾 Listing Details Section */
+.listing-details {
+  background: #fff;
+  padding: 1.8rem;
+  border-top: 1px solid #f1f1f1;
+  border-radius: 0 0 16px 16px;
+}
+
+/* 💬 Description Box */
+.listing-description {
+  background-color: #fff5f5;
+  border-left: 5px solid #fe424d;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  color: #444;
+  line-height: 1.7;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.listing-description:hover {
+  background-color: #ffe9e9;
+  transform: scale(1.01);
+}
+
+.listing-details p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.7rem;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* 🎨 Airbnb Red Accent */
+.listing-details i,
+.listing-details strong,
+.price,
+.location {
+  color: #fe424d;
+}
+
+.listing-details p:hover {
+  transform: translateX(5px);
+  color: #ff5a63;
+}
+
+/* 💰 Price & 📍 Location Badges */
+.price-badge,
+.location-badge {
+  display: inline-block;
+  background-color: #fe424d;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.price-badge:hover,
+.location-badge:hover {
+  background-color: #ff5a63;
+  transform: scale(1.05);
+}
+
+/* ❤️ Airbnb Style Buttons (General) */
+.btn-airbnb {
+  background-color: #fe424d;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  border-radius: 25px;
+  padding: 10px 20px;
+  letter-spacing: 0.5px;
+}
+
+.btn-airbnb:hover {
+  background-color: #ff5a63;
+  transform: scale(1.05);
+}
+
+/* ❤️ Airbnb Style Buttons Group (Smaller & Consistent Size) */
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1rem 0;
+}
+
+.btns button,
+.btns a {
+  background-color: #fe424d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px; /* reduced padding for smaller width */
+  width: 110px; /* fixed smaller width */
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.btns button:hover,
+.btns a:hover {
+  background-color: #ff5a63;
+  transform: scale(1.05);
+  box-shadow: 0 3px 10px rgba(254, 66, 77, 0.3);
+}
+
+.btns button:active,
+.btns a:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 5px rgba(254, 66, 77, 0.4);
+}
+
+/* 🗺️ Map Section */
+#map {
+  height: 300px;
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 1rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 💬 Review Section */
+.review-section {
+  margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.review {
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.review:last-child {
+  border-bottom: none;
+}
+
+.review strong {
+  color: #fe424d;
+}
+
+.review small {
+  color: #888;
+}
+
+/* ⭐ Star Rating */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 1.8rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #fe424d;
+}
+
+/* ✏️ Review Form */
+.review-form textarea {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  resize: none;
+  padding: 10px;
+  width: 100%;
+  min-height: 80px;
+}
+
+.review-form button {
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .btns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btns button,
+  .btns a {
+    width: 100%; /* full width on mobile */
+  }
+
+  .image-container {
+    height: 300px;
+  }
+
+  .image-overlay h5 {
+    font-size: 1.1rem;
+  }
+
+  .image-overlay p {
+    font-size: 0.85rem;
+  }
+
+  .listing-details {
+    padding: 1.2rem;
+  }
+
+  .listing-description {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+}

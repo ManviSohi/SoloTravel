@@ -5,86 +5,74 @@
   const listing = <%- JSON.stringify(listing) %>;
 </script>
 
-<style>
-  /* Responsive Styling */
-  .show-card {
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-top: 1rem;
-  }
-
-  .show-img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px 15px 0 0;
-    object-fit: cover;
-  }
-
-  /* Airbnb-style buttons */
-  .btn-airbnb {
-    background-color: #fe424d;
-    color: white;
-    border: none;
-    transition: all 0.3s ease;
-  }
-
-  .btn-airbnb:hover {
-    background-color: #ff5a63;
-    color: #fff;
-  }
-
-  .btns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 1rem 0;
-  }
-
-  #map {
-    height: 300px;
-    width: 100%;
-    border-radius: 15px;
-  }
-
-  @media (max-width: 768px) {
-    .card.col-5 {
-      width: 100% !important;
-      margin-left: 0 !important;
-    }
-    .btns {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  }
-</style>
-
 <div class="container my-4">
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
       <h3 class="text-center mb-3"><%= listing.title %></h3>
 
-      <!-- Listing Card -->
+      <!--  Updated Listing Image Section -->
       <div class="card show-card">
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top show-img"
-          alt="listing_image"
-        />
-        <div class="card-body">
-          <p class="card-text">
-            Owned by <i><%= listing.owner.username %></i>
-          </p>
-          <p class="card-text"><%= listing.description %></p>
-          <p class="card-text">
-            &#8377;
-            <%= listing.price != null ? listing.price.toLocaleString("en-IN") : "Price not available" %>
-          </p>
-          <p class="card-text"><%= listing.location %></p>
-          <p class="card-text"><%= listing.country %></p>
+        <div class="image-container">
+          <img
+            src="<%= listing.image.url %>"
+            alt="listing_image"
+            class="listing-image"
+          />
+          <div class="image-overlay">
+            <h5><%= listing.title %></h5>
+            <p><%= listing.location %>, <%= listing.country %></p>
+          </div>
+        </div>
+
+        <!--  Updated Card Body Section -->
+        <div class="card-body listing-details">
+          <div class="owner-info mb-3">
+            <p class="card-text mb-1">
+              <i class="fa-solid fa-user-circle me-2" style="color:#fe424d;"></i>
+              <strong>Owned by:</strong> <i><%= listing.owner.username %></i>
+            </p>
+          </div>
+
+          <!--  Description Section -->
+          <div class="listing-description mb-4 p-3 rounded" 
+               style="background-color:#fff5f5; border-left:5px solid #fe424d;">
+            <p class="card-text text-dark mb-0" style="line-height:1.6;">
+              <i class="fa-solid fa-align-left me-2" style="color:#fe424d;"></i>
+              <%= listing.description %>
+            </p>
+          </div>
+
+          <!--  Price &  Location -->
+          <div class="price-location">
+            <p class="price mb-2">
+              <i class="fa-solid fa-tag me-2" style="color:#fe424d;"></i>
+              <strong>Price:</strong>
+              &#8377;
+              <%= listing.price != null ? listing.price.toLocaleString("en-IN") : "Price not available" %>
+            </p>
+
+            <p class="location mb-0">
+              <i class="fa-solid fa-location-dot me-2" style="color:#fe424d;"></i>
+              <strong>Location:</strong> <%= listing.location %>, <%= listing.country %>
+            </p>
+          </div>
         </div>
       </div>
 
+      <!--  Booking Section -->
+      <div class="text-center my-3">
+        <% if (!currUser) { %>
+          <a href="/login" class="btn btn-airbnb px-4 py-2">Login to Book</a>
+        <% } else if (listing.owner && currUser && !listing.owner._id.equals(currUser._id)) { %>
+          <form id="bookingForm" action="/listings/<%= listing._id %>/book" method="POST">
+            <button type="submit" class="btn btn-airbnb px-4 py-2">Book Now</button>
+          </form>
+        <% } else { %>
+          <p class="text-muted">You are the owner of this listing.</p>
+        <% } %>
+      </div>
+
+      <!--  Owner Controls -->
       <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
       <div class="btns">
         <a href="/listings/<%= listing._id %>/edit" class="btn btn-airbnb w-100 w-md-auto">Edit</a>
@@ -94,77 +82,68 @@
       </div>
       <% } %>
 
-      <!-- Review Form -->
-      <div class="mb-3">
-        <% if(currUser) { %>
-        <hr />
-        <h4>Leave a Review</h4>
-        <form
-          action="/listings/<%= listing.id %>/reviews"
-          method="POST"
-          novalidate
-          class="needs-validation"
-        >
-          <div class="mb-3 mt-3">
-            <label for="rating" class="form-label">Rating</label>
-            <fieldset class="starability-slot">
-              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-              <label for="first-rate1" title="Terrible">1 star</label>
-              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-              <label for="first-rate2" title="Not good">2 stars</label>
-              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-              <label for="first-rate3" title="Average">3 stars</label>
-              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-              <label for="first-rate4" title="Very good">4 stars</label>
-              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-              <label for="first-rate5" title="Amazing">5 stars</label>
-            </fieldset>
-          </div>
+      <!--  Reviews Section -->
+      <div class="review-section mt-5">
+        <h4 class="mb-4">Reviews</h4>
 
-          <div class="mb-3 mt-3">
-            <label for="comment" class="form-label">Comments</label>
-            <textarea
-              name="review[comment]"
-              id="comment"
-              cols="30"
-              rows="5"
-              class="form-control"
-              required
-            ></textarea>
-            <div class="invalid-feedback">Please add some comments for review</div>
-          </div>
-          <button class="btn btn-outline-dark">Submit</button>
-        </form>
-        <hr />
+        <% if (listing.reviews.length === 0) { %>
+          <p class="text-muted">No reviews yet. Be the first to share your experience!</p>
+        <% } else { %>
+          <% listing.reviews.forEach(review => { %>
+            <div class="review">
+              <strong><%= review.author.username %></strong>
+              <small class="text-muted"> – <%= review.createdAt.toDateString() %></small>
+              <p class="mt-2"><%= review.comment %></p>
+
+              <% if (review.rating) { %>
+                <p>
+                  <% for (let i = 0; i < review.rating; i++) { %>
+                    <span style="color:#ffb400;">★</span>
+                  <% } %>
+                  <% for (let i = review.rating; i < 5; i++) { %>
+                    <span style="color:#ccc;">★</span>
+                  <% } %>
+                </p>
+              <% } %>
+
+              <% if (currUser && review.author && currUser._id.equals(review.author._id)) { %>
+                <form
+                  class="delete-review-form"
+                  action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              <% } %>
+            </div>
+          <% }) %>
+        <% } %>
+
+        <% if (currUser && (!listing.owner._id.equals(currUser._id))) { %>
+          <hr />
+          <form
+            id="reviewForm"
+            class="review-form mt-3"
+            action="/listings/<%= listing._id %>/reviews"
+            method="POST"
+          >
+            <div class="star-rating" aria-label="Rating">
+              <input type="radio" id="star5" name="review[rating]" value="5" required><label for="star5">★</label>
+              <input type="radio" id="star4" name="review[rating]" value="4"><label for="star4">★</label>
+              <input type="radio" id="star3" name="review[rating]" value="3"><label for="star3">★</label>
+              <input type="radio" id="star2" name="review[rating]" value="2"><label for="star2">★</label>
+              <input type="radio" id="star1" name="review[rating]" value="1"><label for="star1">★</label>
+            </div>
+
+            <textarea name="review[comment]" placeholder="Write your review..." required></textarea>
+            <button class="btn btn-airbnb btn-sm px-4 mt-2">Submit Review</button>
+          </form>
+        <% } else if (!currUser) { %>
+          <p class="text-center text-muted mt-3">Login to write a review.</p>
         <% } %>
       </div>
 
-      <!-- All Reviews -->
-      <% if(listing.reviews.length > 0) { %>
-      <div>
-        <h5><b>All Reviews</b></h5>
-        <div class="row justify-content-center">
-          <% for(review of listing.reviews) { %>
-          <div class="card col-lg-5 col-md-6 col-sm-10 m-2">
-            <div class="card-body">
-              <h5 class="card-title"><%= review.author.username %></h5>
-              <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-              <p class="card-text"><%= review.comment %></p>
-              <form
-                method="POST"
-                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-              >
-                <button class="btn btn-sm btn-airbnb">Delete</button>
-              </form>
-            </div>
-          </div>
-          <% } %>
-        </div>
-      </div>
-      <% } %>
-
-      <!-- Map Section -->
+      <!-- 🗺️ Map Section -->
       <div class="mt-4">
         <h4>Where you'll be</h4>
         <div id="map"></div>
@@ -173,4 +152,20 @@
   </div>
 </div>
 
+<!--  External CSS & JS -->
+<link rel="stylesheet" href="/css/show.css" />
+
+<!-- Font Awesome for Icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+/>
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Custom JS -->
+<script src="/js/booking.js"></script>
+<script src="/js/review.js"></script>
+<script src="/js/deleteReview.js"></script>
 <script src="/js/map.js"></script>

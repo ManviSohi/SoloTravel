@@ -1,0 +1,98 @@
+/* 🌙 Footer Base Style */
+footer {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  padding: 1.8rem 0;
+  text-align: center;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 2rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.f-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1.2rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* 🌈 Social Icons */
+.f-info-socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.f-info-socials a {
+  color: #444;
+  font-size: 1.7rem;
+  transition: all 0.3s ease;
+}
+
+.f-info-socials a:hover {
+  color: #fe424d;
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* 💼 Brand Name */
+.f-info-brand {
+  font-weight: 600;
+  color: #222;
+  letter-spacing: 0.5px;
+}
+
+/* 🔗 Footer Links */
+.f-info-links {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.f-info-links a {
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.f-info-links a:hover {
+  color: #fe424d;
+}
+
+/* 🌍 Responsiveness */
+@media (max-width: 768px) {
+  .f-info {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .f-info-socials a {
+    font-size: 1.5rem;
+  }
+
+  .f-info-links {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    padding: 1.2rem 0;
+  }
+
+  .f-info-socials a {
+    font-size: 1.4rem;
+  }
+
+  .f-info-brand {
+    font-size: 0.9rem;
+  }
+
+  .f-info-links a {
+    font-size: 0.85rem;
+  }
+}
